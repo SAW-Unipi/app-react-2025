@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon"
+          type="image/svg+xml"
+          href="/vite.svg" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+          rel="stylesheet">
+    <link href="style.css"
+          rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <h1>SAW TODO</h1>
+        <h2>HTML</h2>
+        <button class="btn">
+            <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 512 512">
+                <path
+                      d="M512 256A256 256 0 1 0 0 256a256 256 0 1 0 512 0zM217.4 376.9L117.5 269.8c-3.5-3.8-5.5-8.7-5.5-13.8s2-10.1 5.5-13.8l99.9-107.1c4.2-4.5 10.1-7.1 16.3-7.1c12.3 0 22.3 10 22.3 22.3l0 57.7 96 0c17.7 0 32 14.3 32 32l0 32c0 17.7-14.3 32-32 32l-96 0 0 57.7c0 12.3-10 22.3-22.3 22.3c-6.2 0-12.1-2.6-16.3-7.1z" />
+            </svg>
+        </button>
+    </header>
+    <div class="container">
+        <input type="text"
+               class="text-input"
+               placeholder="Inserisci todo...">
+
+        <section class="todos">
+            <ul>
+                <li>
+                    <div class="item">
+                        <div>
+                            <input type="checkbox">
+                            <span>Todo item</span>
+                            <button>&times;</button>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div>
+                            <input type="checkbox"
+                                   checked="true">
+                            <span class="completed">Completed todo </span>
+                            <button>&times;</button>
+                        </div>
+
+                        <input class="text-input hidden"
+                               type="text">
+                    </div>
+                </li>
+                <li>
+                    <div class="item">
+                        <div class="hidden">
+                            <input type="checkbox">
+                            <span> Editing todo</span>
+                            <button>&times;</button>
+                        </div>
+
+                        <input class="text-input"
+                               type="text"
+                               value="Editing Todo">
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+    </div>
+</body>
+
+</html>
