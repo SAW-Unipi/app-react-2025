@@ -1,23 +1,59 @@
 import React, { useRef, useState } from "react";
+import { EditIcon, ArrowRight, CloseIcon, BackIcon } from "./Icons";
+import { useNavigate, useParams } from "react-router-dom";
+import { List, Todo, useLists, useLocalStorage } from "./hooks";
 
-interface Todo {
-    id: string;
-    completed: 'done' | 'ongoing';
-    text: string;
-}
 
 function App() {
-    return <TodoPage />
+    return <ListPage />;
+    // <TodoPage />
 
 }
 
-function BackIcon() {
-    return <svg xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 512 512">
-        <path
-            d="M512 256A256 256 0 1 0 0 256a256 256 0 1 0 512 0zM217.4 376.9L117.5 269.8c-3.5-3.8-5.5-8.7-5.5-13.8s2-10.1 5.5-13.8l99.9-107.1c4.2-4.5 10.1-7.1 16.3-7.1c12.3 0 22.3 10 22.3 22.3l0 57.7 96 0c17.7 0 32 14.3 32 32l0 32c0 17.7-14.3 32-32 32l-96 0 0 57.7c0 12.3-10 22.3-22.3 22.3c-6.2 0-12.1-2.6-16.3-7.1z" />
-    </svg>
+function ListItem({ list, deleteList }: { list: List, deleteList: (id:string) => void }) {
+    const completed = list.todos.filter(t => t.completed === "done").length;
+    const percentage = Math.round(completed * 100 / list.todos.length);
+    const navigate = useNavigate();
+
+    return <div className="list">
+        <div className="list-title">
+            <span className="title">{list.name}</span>
+            <div>
+                <button className="btn">
+                    <EditIcon />
+                </button>
+                <button className="btn" onClick={() => navigate(`/lists/${list.id}`)}>
+                    <ArrowRight />
+                </button>
+                <button className="btn" onClick={() => deleteList(list.id)}>
+                    <CloseIcon />
+                </button>
+            </div>
+        </div>
+
+        <div className="bar">
+            <span className="percentage" style={{ width: `${percentage}%` }}>
+                <span className="tooltip">{percentage}%</span>
+            </span>
+        </div>
+    </div>
 }
+
+export function ListPage() {
+
+    const [lists, addList, updateList, deleteList] = useLists();
+
+    return <>
+        <h1>SAW TODO</h1>
+        <div className="container">
+            <input type="text"
+                className="text-input"
+                placeholder="Inserisci lista..." />
+            {lists.map(l => <ListItem key={l.id} list={l} deleteList={deleteList}/>)}
+        </div>
+    </>
+}
+
 
 function TodoItem({ todo, deleteTodo, updateTodo }: { todo: Todo, deleteTodo: (id: string) => void, updateTodo: (t: Todo) => void }) {
     const [editMode, setEditMode] = useState<boolean>(false);
@@ -39,7 +75,7 @@ function TodoItem({ todo, deleteTodo, updateTodo }: { todo: Todo, deleteTodo: (i
         if (e.key === "Escape") {
             setEditMode(false);
             return;
-        }       
+        }
     }
 
     return <div className="item">
@@ -67,7 +103,9 @@ function TodoItem({ todo, deleteTodo, updateTodo }: { todo: Todo, deleteTodo: (i
     </div>
 }
 
-function TodoPage() {
+export function TodoPage() {
+    const params = useParams();
+    const navigate = useNavigate();
     const [todos, setTodos] = useState<Todo[]>([
         { id: "1", text: "Inviare mail proposta progetto", completed: "done" },
         { id: "2", text: "Attendere Ack", completed: "ongoing" },
@@ -107,9 +145,9 @@ function TodoPage() {
 
     return <>
         <header>
-            <h1>SAW TODO</h1>
+            <h1>SAW TODO {params.id}</h1>
             <h2>HTML</h2>
-            <button className="btn">
+            <button className="btn" onClick={() => navigate("/")}>
                 <BackIcon />
             </button>
         </header>
